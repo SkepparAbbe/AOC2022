@@ -28,5 +28,13 @@ public class MostCalories {
             }
         }
         System.out.println(Collections.max(caloriesSum));
+        
+        Collections.sort(caloriesSum);
+        int top3ElfsCalories = 0;
+        for (int i = 0; i < 3; i++) {
+            top3ElfsCalories += caloriesSum.get(caloriesSum.size() - 1 - i);
+        }
+        System.out.println(top3ElfsCalories);
     }
-}
+
+    }
