@@ -1,62 +1,40 @@
 package AOC22.First;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.io.File;
-import java.nio.file;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-
+import java.io.FileNotFoundException;
 
 public class MostCalories {
-    private static final String data = "C:\\Users\\albsk\\Desktop\\Kod\\AOC22\\First\\data.txt";
-    final private static String EOL = "\\r\\n";
+    public static void main(String[] args) throws FileNotFoundException {
+        String data = "First\\input.txt";
 
-    public static ArrayList<Integer> textFileToArrayList() {
-        String content = new String(Files.readAllBytes(Paths.get(data));)
-
-        ArrayList<String> caloriesList = new ArrayList<>();
-        fileReader.useDelimiter("  ");
-
-        while(fileReader.hasNext()) {
-            caloriesList.add(fileReader.next());
-        }  
-        for (int i=0; i<caloriesList.size(); i++) {
-            System.out.println(caloriesList.get(i));
+        ArrayList<String> inputArr = new ArrayList<String>();
+        File input = new File(data);
+        Scanner fileScanner = new Scanner(input);
+        while(fileScanner.hasNextLine()) {
+            inputArr.add(fileScanner.nextLine());
         }
-
-        fileReader.close();
+        fileScanner.close();
+        ArrayList<Integer> caloriesSum = new ArrayList<>();
+        int sumPerElf = 0;
+        for (int i = 0; i < inputArr.size(); i++) {
+            if (inputArr.get(i) != "") {
+                sumPerElf += Integer.parseInt(inputArr.get(i));
+            } else {
+                caloriesSum.add(sumPerElf);
+                sumPerElf = 0;
+            }
+        }
+        System.out.println(Collections.max(caloriesSum));
+        
+        Collections.sort(caloriesSum);
+        int top3ElfsCalories = 0;
+        for (int i = 0; i < 3; i++) {
+            top3ElfsCalories += caloriesSum.get(caloriesSum.size() - 1 - i);
+        }
+        System.out.println(top3ElfsCalories);
+    }
 
     }
-    
-
-    public static void main(String[] args) {
-        
-        
-        File filepath = new File();
-        
-        File starting = new File(System.getProperty("user.dir"));
-        File fileToBeRead = new File(starting,"data.txt");
-
-        System.out.println(fileToBeRead);
-
-        Scanner s = new Scanner(fileToBeRead);
-        ArrayList<String> list = new ArrayList<String>();
-        while (s.hasNextLine()){
-            list.add(s.nextLine());
-        }
-        s.close();
-
-        for(int i = 0; i < list.size(); i++) {   
-          System.out.print(list.get(i));
-      } 
-      
-    }
-    
-
-// dela upp i en lista 
-
-
-    
-}
