@@ -4,13 +4,44 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println(convertCharToPriority("A"));
+    public static void main(String[] args) throws FileNotFoundException{
+        ArrayList<String> inList = readFile();
+        int totalPriority = 0;
+        for (int i = 0; i < inList.size(); i++) {
+            ArrayList<Character> pairs = findPairs(inList.get(i)); 
+            for (int j = 0; j < pairs.size(); j++) {
+                totalPriority += convertCharToPriority(pairs.get(j));
+                //System.out.println(pairs.get(j));
+            }
+        }
+        System.out.println(totalPriority);
+        totalPriority = 0;
+        for (int i = 0; i < inList.size(); i += 3) {
+            char badge = findAuthenticationBadge(inList.get(i), inList.get(i+1), inList.get(i+2));
+            totalPriority += convertCharToPriority(badge);
+        }
+        System.out.println(totalPriority);
+    }
 
+    private static char findAuthenticationBadge(String firstBackpack, String secondBackpack, String thirdBackpack) {
+        ArrayList<Character> pairs = new ArrayList<>();
+        for (int i = 0; i < firstBackpack.length(); i++) {
+            for (int j = 0; j < secondBackpack.length(); j++) {
+                if (firstBackpack.charAt(i) == secondBackpack.charAt(j) && !pairs.contains(firstBackpack.charAt(i))) {
+                        pairs.add(firstBackpack.charAt(i));
+                    }
+                }
+            }
+        for (int k = 0; k < thirdBackpack.length(); k++) {
+            if (pairs.contains(thirdBackpack.charAt(k))) {
+                return thirdBackpack.charAt(k);
+            }
+        }
+        return 'c';
     }
 
     private static ArrayList<String> readFile() throws FileNotFoundException {
-        String filepath = "input.txt";
+        String filepath = "Third\\input.txt";
         File file = new File(filepath);
         Scanner fileReader = new Scanner(file);
         ArrayList<String> inList = new ArrayList<>();
@@ -28,21 +59,26 @@ public class Main {
         ArrayList<Character> pairs = new ArrayList<>();
         for (int i = 0; i < first.length(); i++) {
             for (int j = 0; j < second.length(); j++) {
-                if (first.charAt(i) == second.charAt(j)) {
-                    
+                if (first.charAt(i) == second.charAt(j) && !pairs.contains(first.charAt(i))) {
+                        pairs.add(first.charAt(i));
+                    }
                 }
             }
+        return pairs;
         }
-    }
+        
 
-    private static int convertCharToPriority(String c) {
+    // private static int calculatePriorityPoints(ArrayList<String> pairs) {
+    //     return convertCharToPriority(pairs);
+    // }
+
+    private static int convertCharToPriority(Character c) {
         int priority = 0;
-        char ch = c.charAt(0);
-        if (Character.isLowerCase(ch)) {
-            priority = ((int) ch) - 96;
+        if (Character.isLowerCase(c)) {
+            priority = ((int) c) - 96;
         }
-        else if (Character.isUpperCase(ch)) {
-            priority = ((int) ch) - 38;
+        else if (Character.isUpperCase(c)) {
+            priority = ((int) c) - 38;
         }
         return priority;
     }
