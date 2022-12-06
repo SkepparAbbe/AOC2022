@@ -11,7 +11,6 @@ public class Main {
             ArrayList<Character> pairs = findPairs(inList.get(i)); 
             for (int j = 0; j < pairs.size(); j++) {
                 totalPriority += convertCharToPriority(pairs.get(j));
-                //System.out.println(pairs.get(j));
             }
         }
         System.out.println(totalPriority);

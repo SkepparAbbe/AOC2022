@@ -1,4 +1,4 @@
-package AOC22.First;
+package First;
 
 import java.util.ArrayList;
 import java.util.Collections;
